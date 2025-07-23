@@ -1,0 +1,992 @@
+[
+  {
+    "name": "Saquon Barkley",
+    "games": 16,
+    "total_points": 322.3,
+    "points_per_game": 20.14
+  },
+  {
+    "name": "Derrick Henry",
+    "games": 17,
+    "total_points": 317.4,
+    "points_per_game": 18.67
+  },
+  {
+    "name": "Jahmyr Gibbs",
+    "games": 17,
+    "total_points": 310.9,
+    "points_per_game": 18.29
+  },
+  {
+    "name": "Bijan Robinson",
+    "games": 17,
+    "total_points": 280.7,
+    "points_per_game": 16.51
+  },
+  {
+    "name": "Josh Jacobs",
+    "games": 17,
+    "total_points": 257.1,
+    "points_per_game": 15.12
+  },
+  {
+    "name": "Kyren Williams",
+    "games": 16,
+    "total_points": 238.1,
+    "points_per_game": 14.88
+  },
+  {
+    "name": "James Cook",
+    "games": 16,
+    "total_points": 234.7,
+    "points_per_game": 14.67
+  },
+  {
+    "name": "Jonathan Taylor",
+    "games": 14,
+    "total_points": 226.7,
+    "points_per_game": 16.19
+  },
+  {
+    "name": "De'Von Achane",
+    "games": 17,
+    "total_points": 221.9,
+    "points_per_game": 13.05
+  },
+  {
+    "name": "James Conner",
+    "games": 16,
+    "total_points": 206.8,
+    "points_per_game": 12.93
+  },
+  {
+    "name": "Joe Mixon",
+    "games": 14,
+    "total_points": 204.5,
+    "points_per_game": 14.61
+  },
+  {
+    "name": "Chase Brown",
+    "games": 16,
+    "total_points": 201,
+    "points_per_game": 12.56
+  },
+  {
+    "name": "Chuba Hubbard",
+    "games": 15,
+    "total_points": 198.6,
+    "points_per_game": 13.24
+  },
+  {
+    "name": "Bucky Irving",
+    "games": 17,
+    "total_points": 197.4,
+    "points_per_game": 11.61
+  },
+  {
+    "name": "Alvin Kamara",
+    "games": 14,
+    "total_points": 197.3,
+    "points_per_game": 14.09
+  },
+  {
+    "name": "Aaron Jones Sr.",
+    "games": 17,
+    "total_points": 190.6,
+    "points_per_game": 11.21
+  },
+  {
+    "name": "David Montgomery",
+    "games": 14,
+    "total_points": 185.7,
+    "points_per_game": 13.26
+  },
+  {
+    "name": "Breece Hall",
+    "games": 16,
+    "total_points": 183.9,
+    "points_per_game": 11.49
+  },
+  {
+    "name": "D'Andre Swift",
+    "games": 17,
+    "total_points": 172.5,
+    "points_per_game": 10.15
+  },
+  {
+    "name": "Najee Harris",
+    "games": 17,
+    "total_points": 168.6,
+    "points_per_game": 9.92
+  },
+  {
+    "name": "J.K. Dobbins",
+    "games": 13,
+    "total_points": 159.8,
+    "points_per_game": 12.29
+  },
+  {
+    "name": "Tony Pollard",
+    "games": 16,
+    "total_points": 159.7,
+    "points_per_game": 9.98
+  },
+  {
+    "name": "Rico Dowdle",
+    "games": 16,
+    "total_points": 158.8,
+    "points_per_game": 9.93
+  },
+  {
+    "name": "Rachaad White",
+    "games": 16,
+    "total_points": 148.6,
+    "points_per_game": 9.29
+  },
+  {
+    "name": "Zach Charbonnet",
+    "games": 17,
+    "total_points": 144.9,
+    "points_per_game": 8.52
+  },
+  {
+    "name": "Tyrone Tracy Jr.",
+    "games": 17,
+    "total_points": 144.3,
+    "points_per_game": 8.49
+  },
+  {
+    "name": "Rhamondre Stevenson",
+    "games": 15,
+    "total_points": 142.9,
+    "points_per_game": 9.53
+  },
+  {
+    "name": "Brian Robinson Jr.",
+    "games": 14,
+    "total_points": 139.8,
+    "points_per_game": 9.99
+  },
+  {
+    "name": "Kenneth Walker III",
+    "games": 11,
+    "total_points": 135.2,
+    "points_per_game": 12.29
+  },
+  {
+    "name": "Kareem Hunt",
+    "games": 13,
+    "total_points": 132.4,
+    "points_per_game": 10.18
+  },
+  {
+    "name": "Tank Bigsby",
+    "games": 16,
+    "total_points": 122,
+    "points_per_game": 7.63
+  },
+  {
+    "name": "Javonte Williams",
+    "games": 17,
+    "total_points": 105.9,
+    "points_per_game": 6.23
+  },
+  {
+    "name": "Jordan Mason",
+    "games": 12,
+    "total_points": 104,
+    "points_per_game": 8.67
+  },
+  {
+    "name": "Alexander Mattison",
+    "games": 14,
+    "total_points": 101.4,
+    "points_per_game": 7.24
+  },
+  {
+    "name": "Ray Davis",
+    "games": 17,
+    "total_points": 99.1,
+    "points_per_game": 5.83
+  },
+  {
+    "name": "Austin Ekeler",
+    "games": 12,
+    "total_points": 97.3,
+    "points_per_game": 8.11
+  },
+  {
+    "name": "Jerome Ford",
+    "games": 14,
+    "total_points": 97,
+    "points_per_game": 6.93
+  },
+  {
+    "name": "Tyler Allgeier",
+    "games": 17,
+    "total_points": 93.2,
+    "points_per_game": 5.48
+  },
+  {
+    "name": "Travis Etienne Jr.",
+    "games": 15,
+    "total_points": 91.2,
+    "points_per_game": 6.08
+  },
+  {
+    "name": "Jaylen Warren",
+    "games": 15,
+    "total_points": 86.1,
+    "points_per_game": 5.74
+  },
+  {
+    "name": "Ameer Abdullah",
+    "games": 16,
+    "total_points": 85.2,
+    "points_per_game": 5.33
+  },
+  {
+    "name": "Justice Hill",
+    "games": 15,
+    "total_points": 85.1,
+    "points_per_game": 5.67
+  },
+  {
+    "name": "Emanuel Wilson",
+    "games": 17,
+    "total_points": 85,
+    "points_per_game": 5
+  },
+  {
+    "name": "Tyjae Spears",
+    "games": 12,
+    "total_points": 83.6,
+    "points_per_game": 6.97
+  },
+  {
+    "name": "Antonio Gibson",
+    "games": 17,
+    "total_points": 80.4,
+    "points_per_game": 4.73
+  },
+  {
+    "name": "Cam Akers",
+    "games": 16,
+    "total_points": 79.2,
+    "points_per_game": 4.95
+  },
+  {
+    "name": "Isaac Guerendo",
+    "games": 16,
+    "total_points": 79.2,
+    "points_per_game": 4.95
+  },
+  {
+    "name": "Devin Singletary",
+    "games": 16,
+    "total_points": 75.6,
+    "points_per_game": 4.72
+  },
+  {
+    "name": "Ty Johnson",
+    "games": 17,
+    "total_points": 73.7,
+    "points_per_game": 4.34
+  },
+  {
+    "name": "Jaleel McLaughlin",
+    "games": 16,
+    "total_points": 73.2,
+    "points_per_game": 4.58
+  },
+  {
+    "name": "Braelon Allen",
+    "games": 17,
+    "total_points": 66.2,
+    "points_per_game": 3.89
+  },
+  {
+    "name": "Roschon Johnson",
+    "games": 13,
+    "total_points": 61.4,
+    "points_per_game": 4.72
+  },
+  {
+    "name": "Gus Edwards",
+    "games": 11,
+    "total_points": 61.1,
+    "points_per_game": 5.55
+  },
+  {
+    "name": "Sean Tucker",
+    "games": 17,
+    "total_points": 59.7,
+    "points_per_game": 3.51
+  },
+  {
+    "name": "Zack Moss",
+    "games": 8,
+    "total_points": 58.9,
+    "points_per_game": 7.36
+  },
+  {
+    "name": "Nick Chubb",
+    "games": 8,
+    "total_points": 58.3,
+    "points_per_game": 7.29
+  },
+  {
+    "name": "Jeremy McNichols",
+    "games": 17,
+    "total_points": 54.8,
+    "points_per_game": 3.22
+  },
+  {
+    "name": "Samaje Perine",
+    "games": 17,
+    "total_points": 53.4,
+    "points_per_game": 3.14
+  },
+  {
+    "name": "Miles Sanders",
+    "games": 11,
+    "total_points": 53.3,
+    "points_per_game": 4.85
+  },
+  {
+    "name": "Raheem Mostert",
+    "games": 13,
+    "total_points": 51.9,
+    "points_per_game": 3.99
+  },
+  {
+    "name": "Ezekiel Elliott",
+    "games": 15,
+    "total_points": 45.5,
+    "points_per_game": 3.03
+  },
+  {
+    "name": "Isiah Pacheco",
+    "games": 7,
+    "total_points": 44.9,
+    "points_per_game": 6.41
+  },
+  {
+    "name": "Kenneth Gainwell",
+    "games": 17,
+    "total_points": 44.6,
+    "points_per_game": 2.62
+  },
+  {
+    "name": "Audric Estime",
+    "games": 13,
+    "total_points": 43.7,
+    "points_per_game": 3.36
+  },
+  {
+    "name": "Dameon Pierce",
+    "games": 11,
+    "total_points": 41.5,
+    "points_per_game": 3.77
+  },
+  {
+    "name": "Trey Benson",
+    "games": 13,
+    "total_points": 41,
+    "points_per_game": 3.15
+  },
+  {
+    "name": "Emari Demercado",
+    "games": 13,
+    "total_points": 38.7,
+    "points_per_game": 2.98
+  },
+  {
+    "name": "Kyle Juszczyk",
+    "games": 17,
+    "total_points": 38.6,
+    "points_per_game": 2.27
+  },
+  {
+    "name": "Trey Sermon",
+    "games": 17,
+    "total_points": 37.8,
+    "points_per_game": 2.22
+  },
+  {
+    "name": "Dare Ogunbowale",
+    "games": 17,
+    "total_points": 37,
+    "points_per_game": 2.18
+  },
+  {
+    "name": "Isaiah Davis",
+    "games": 14,
+    "total_points": 36.9,
+    "points_per_game": 2.64
+  },
+  {
+    "name": "Tyler Goodson",
+    "games": 16,
+    "total_points": 33.4,
+    "points_per_game": 2.09
+  },
+  {
+    "name": "Christian McCaffrey",
+    "games": 4,
+    "total_points": 32.8,
+    "points_per_game": 8.2
+  },
+  {
+    "name": "Chris Brooks",
+    "games": 13,
+    "total_points": 31.2,
+    "points_per_game": 2.4
+  },
+  {
+    "name": "Chris Rodriguez Jr.",
+    "games": 8,
+    "total_points": 30.5,
+    "points_per_game": 3.81
+  },
+  {
+    "name": "Hassan Haskins",
+    "games": 15,
+    "total_points": 29.8,
+    "points_per_game": 1.99
+  },
+  {
+    "name": "Jamaal Williams",
+    "games": 14,
+    "total_points": 28.1,
+    "points_per_game": 2.01
+  },
+  {
+    "name": "Kimani Vidal",
+    "games": 10,
+    "total_points": 27.7,
+    "points_per_game": 2.77
+  },
+  {
+    "name": "Patrick Taylor Jr.",
+    "games": 9,
+    "total_points": 26.8,
+    "points_per_game": 2.98
+  },
+  {
+    "name": "D'Onta Foreman",
+    "games": 11,
+    "total_points": 26.6,
+    "points_per_game": 2.42
+  },
+  {
+    "name": "Blake Corum",
+    "games": 15,
+    "total_points": 26.5,
+    "points_per_game": 1.77
+  },
+  {
+    "name": "Cordarrelle Patterson",
+    "games": 13,
+    "total_points": 25.5,
+    "points_per_game": 1.96
+  },
+  {
+    "name": "Michael Carter",
+    "games": 4,
+    "total_points": 24.8,
+    "points_per_game": 6.2
+  },
+  {
+    "name": "Kendre Miller",
+    "games": 7,
+    "total_points": 24.1,
+    "points_per_game": 3.44
+  },
+  {
+    "name": "D'Ernest Johnson",
+    "games": 13,
+    "total_points": 23.9,
+    "points_per_game": 1.84
+  },
+  {
+    "name": "Jaylen Wright",
+    "games": 15,
+    "total_points": 23.7,
+    "points_per_game": 1.58
+  },
+  {
+    "name": "Zamir White",
+    "games": 8,
+    "total_points": 23.3,
+    "points_per_game": 2.91
+  },
+  {
+    "name": "Ty Chandler",
+    "games": 15,
+    "total_points": 22.4,
+    "points_per_game": 1.49
+  },
+  {
+    "name": "Khalil Herbert",
+    "games": 13,
+    "total_points": 21.5,
+    "points_per_game": 1.65
+  },
+  {
+    "name": "Pierre Strong Jr.",
+    "games": 13,
+    "total_points": 21.2,
+    "points_per_game": 1.63
+  },
+  {
+    "name": "Sincere McCormick",
+    "games": 4,
+    "total_points": 21.2,
+    "points_per_game": 5.3
+  },
+  {
+    "name": "Kenny McIntosh",
+    "games": 12,
+    "total_points": 19.4,
+    "points_per_game": 1.62
+  },
+  {
+    "name": "Michael Burton",
+    "games": 17,
+    "total_points": 19.3,
+    "points_per_game": 1.14
+  },
+  {
+    "name": "JaMycal Hasty",
+    "games": 14,
+    "total_points": 18.8,
+    "points_per_game": 1.34
+  },
+  {
+    "name": "DeeJay Dallas",
+    "games": 16,
+    "total_points": 18,
+    "points_per_game": 1.13
+  },
+  {
+    "name": "Craig Reynolds",
+    "games": 14,
+    "total_points": 17.9,
+    "points_per_game": 1.28
+  },
+  {
+    "name": "Carson Steele",
+    "games": 16,
+    "total_points": 16.9,
+    "points_per_game": 1.06
+  },
+  {
+    "name": "Alec Ingold",
+    "games": 15,
+    "total_points": 15.3,
+    "points_per_game": 1.02
+  },
+  {
+    "name": "Hunter Luepke",
+    "games": 16,
+    "total_points": 14.9,
+    "points_per_game": 0.93
+  },
+  {
+    "name": "Patrick Ricard",
+    "games": 17,
+    "total_points": 14.2,
+    "points_per_game": 0.84
+  },
+  {
+    "name": "Jordan Mims",
+    "games": 9,
+    "total_points": 14.1,
+    "points_per_game": 1.57
+  },
+  {
+    "name": "Ronnie Rivers",
+    "games": 7,
+    "total_points": 13.3,
+    "points_per_game": 1.9
+  },
+  {
+    "name": "Will Shipley",
+    "games": 13,
+    "total_points": 11.7,
+    "points_per_game": 0.9
+  },
+  {
+    "name": "Tony Jones Jr.",
+    "games": 1,
+    "total_points": 11.5,
+    "points_per_game": 11.5
+  },
+  {
+    "name": "Julius Chestnut",
+    "games": 14,
+    "total_points": 11.3,
+    "points_per_game": 0.81
+  },
+  {
+    "name": "Deuce Vaughn",
+    "games": 6,
+    "total_points": 8.8,
+    "points_per_game": 1.47
+  },
+  {
+    "name": "C.J. Ham",
+    "games": 17,
+    "total_points": 8.5,
+    "points_per_game": 0.5
+  },
+  {
+    "name": "Raheem Blackshear",
+    "games": 16,
+    "total_points": 8,
+    "points_per_game": 0.5
+  },
+  {
+    "name": "Jeff Wilson Jr.",
+    "games": 9,
+    "total_points": 7.6,
+    "points_per_game": 0.84
+  },
+  {
+    "name": "Eric Gray",
+    "games": 16,
+    "total_points": 7.3,
+    "points_per_game": 0.46
+  },
+  {
+    "name": "Clyde Edwards-Helaire",
+    "games": 2,
+    "total_points": 7,
+    "points_per_game": 3.5
+  },
+  {
+    "name": "Tyler Badie",
+    "games": 3,
+    "total_points": 6.4,
+    "points_per_game": 2.13
+  },
+  {
+    "name": "Kene Nwangwu",
+    "games": 2,
+    "total_points": 6,
+    "points_per_game": 3
+  },
+  {
+    "name": "Keaton Mitchell",
+    "games": 4,
+    "total_points": 5.8,
+    "points_per_game": 1.45
+  },
+  {
+    "name": "Sione Vaki",
+    "games": 12,
+    "total_points": 5.1,
+    "points_per_game": 0.42
+  },
+  {
+    "name": "Mike Boone",
+    "games": 5,
+    "total_points": 4.9,
+    "points_per_game": 0.98
+  },
+  {
+    "name": "Jonathon Brooks",
+    "games": 3,
+    "total_points": 4.5,
+    "points_per_game": 1.5
+  },
+  {
+    "name": "J.J. Taylor",
+    "games": 4,
+    "total_points": 4.4,
+    "points_per_game": 1.1
+  },
+  {
+    "name": "Jacob Kibodi",
+    "games": 1,
+    "total_points": 3.9,
+    "points_per_game": 3.9
+  },
+  {
+    "name": "Travis Homer",
+    "games": 9,
+    "total_points": 3.4,
+    "points_per_game": 0.38
+  },
+  {
+    "name": "Terrell Jennings",
+    "games": 2,
+    "total_points": 3.3,
+    "points_per_game": 1.65
+  },
+  {
+    "name": "Jase McClellan",
+    "games": 2,
+    "total_points": 3.2,
+    "points_per_game": 1.6
+  },
+  {
+    "name": "Jermar Jefferson",
+    "games": 2,
+    "total_points": 3.2,
+    "points_per_game": 1.6
+  },
+  {
+    "name": "Rasheen Ali",
+    "games": 5,
+    "total_points": 3.1,
+    "points_per_game": 0.62
+  },
+  {
+    "name": "Dalvin Cook",
+    "games": 2,
+    "total_points": 3,
+    "points_per_game": 1.5
+  },
+  {
+    "name": "Blake Watson",
+    "games": 3,
+    "total_points": 2.3,
+    "points_per_game": 0.77
+  },
+  {
+    "name": "Jonathan Ward",
+    "games": 4,
+    "total_points": 2.2,
+    "points_per_game": 0.55
+  },
+  {
+    "name": "MarShawn Lloyd",
+    "games": 1,
+    "total_points": 1.8,
+    "points_per_game": 1.8
+  },
+  {
+    "name": "Aaron Shampklin",
+    "games": 3,
+    "total_points": 1.7,
+    "points_per_game": 0.57
+  },
+  {
+    "name": "Tyreik McAllister",
+    "games": 2,
+    "total_points": 1.1,
+    "points_per_game": 0.55
+  },
+  {
+    "name": "Myles Gaskin",
+    "games": 4,
+    "total_points": 1,
+    "points_per_game": 0.25
+  },
+  {
+    "name": "George Holani",
+    "games": 3,
+    "total_points": 0.9,
+    "points_per_game": 0.3
+  },
+  {
+    "name": "Cody Schrader",
+    "games": 1,
+    "total_points": 0.9,
+    "points_per_game": 0.9
+  },
+  {
+    "name": "Chris Collier",
+    "games": 6,
+    "total_points": 0.8,
+    "points_per_game": 0.13
+  },
+  {
+    "name": "Tyrion Davis-Price",
+    "games": 1,
+    "total_points": 0.7,
+    "points_per_game": 0.7
+  },
+  {
+    "name": "Reggie Gilliam",
+    "games": 14,
+    "total_points": 0.7,
+    "points_per_game": 0.05
+  },
+  {
+    "name": "Ke'Shawn Vaughn",
+    "games": 1,
+    "total_points": 0.4,
+    "points_per_game": 0.4
+  },
+  {
+    "name": "Darrynton Evans",
+    "games": 2,
+    "total_points": 0.3,
+    "points_per_game": 0.15
+  },
+  {
+    "name": "British Brooks",
+    "games": 3,
+    "total_points": 0.2,
+    "points_per_game": 0.07
+  },
+  {
+    "name": "Joshua Kelley",
+    "games": 2,
+    "total_points": 0.2,
+    "points_per_game": 0.1
+  },
+  {
+    "name": "La'Mical Perine",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Evan Hull",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Kazmeir Allen",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Scott Matlock",
+    "games": 17,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Troy Hairston II",
+    "games": 2,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Colson Yankoff",
+    "games": 4,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Dante Miller",
+    "games": 2,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Brady Russell",
+    "games": 11,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Ben VanSumeren",
+    "games": 7,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Jabari Small",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Kendall Milton",
+    "games": 2,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "D.J. Williams",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Keilan Robinson",
+    "games": 3,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Velus Jones Jr.",
+    "games": 2,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Avery Williams",
+    "games": 17,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Gary Brightwell",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Keaontay Ingram",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Adam Prentice",
+    "games": 17,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "John Kelly Jr.",
+    "games": 1,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Nyheim Hines",
+    "games": 2,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Trayveon Williams",
+    "games": 8,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Khari Blasingame",
+    "games": 4,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Andrew Beck",
+    "games": 4,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Jakob Johnson",
+    "games": 3,
+    "total_points": 0,
+    "points_per_game": 0
+  },
+  {
+    "name": "Dylan Laube",
+    "games": 6,
+    "total_points": -2,
+    "points_per_game": -0.33
+  }
+]
