@@ -19,12 +19,18 @@ fs.createReadStream(filePath)
         if (isNaN(games) || isNaN(totalPoints) || games === 0) return;
 
         const ppg = totalPoints / games;
+        
+        const touches = parseFloat(row.att) + parseFloat(row.rec);
+        const ppt = touches ? parseFloat((totalPoints/touches).toFixed(2)) : 0;
 
         const player = {
             name,
             games,
             total_points: totalPoints,
-            points_per_game: parseFloat(ppg.toFixed(2))
+            points_per_game: parseFloat(ppg.toFixed(2)),
+            touches,
+            points_per_touch: ppt
+
         };
 
         results.push(player);
