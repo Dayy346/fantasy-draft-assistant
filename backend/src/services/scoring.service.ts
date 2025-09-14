@@ -14,19 +14,19 @@ export const POSITION_CONFIG = {
     primaryMetric: 'ppg',
     weights: { ppg: 0.5, ppt: 0.2, oppg: 0.15, ypc: 0.1, consistency: 0.05, injury: -0.1 },
     replacementBaseline: 30, // RB30
-    positionValue: 0.9
+    positionValue: 1.0
   },
   WR: {
     primaryMetric: 'ppg',
     weights: { ppg: 0.5, ppt: 0.2, oppg: 0.15, ypr: 0.1, consistency: 0.05, injury: -0.1 },
     replacementBaseline: 36, // WR36
-    positionValue: 0.8
+    positionValue: 2.5
   },
   TE: {
     primaryMetric: 'ppg',
     weights: { ppg: 0.6, ppt: 0.2, oppg: 0.1, ypr: 0.05, consistency: 0.05, injury: -0.1 },
     replacementBaseline: 12, // TE12
-    positionValue: 0.7
+    positionValue: 0.8
   },
   K: {
     primaryMetric: 'ppg',
@@ -128,35 +128,35 @@ export function computeDraftScore(
   let totalWeight = 0
 
   // PPG component (primary metric for all positions)
-  if (season.ppg !== null && season.ppg !== undefined && weights.ppg) {
+  if (season.ppg !== null && season.ppg !== undefined && season.ppg > 0 && weights.ppg) {
     const zScore = computeZScore(season.ppg, means.ppg, stdDevs.ppg)
     score += weights.ppg * zScore
     totalWeight += weights.ppg
   }
 
   // PPT component (for skill positions)
-  if (season.ppt !== null && season.ppt !== undefined && 'ppt' in weights && weights.ppt) {
+  if (season.ppt !== null && season.ppt !== undefined && season.ppt > 0 && 'ppt' in weights && weights.ppt) {
     const zScore = computeZScore(season.ppt, means.ppt, stdDevs.ppt)
     score += weights.ppt * zScore
     totalWeight += weights.ppt
   }
 
   // Opportunities per game component (for skill positions)
-  if (season.oppg !== null && season.oppg !== undefined && 'oppg' in weights && weights.oppg) {
+  if (season.oppg !== null && season.oppg !== undefined && season.oppg > 0 && 'oppg' in weights && weights.oppg) {
     const zScore = computeZScore(season.oppg, means.oppg, stdDevs.oppg)
     score += weights.oppg * zScore
     totalWeight += weights.oppg
   }
 
   // Yards per carry component (RB only)
-  if (season.ypc !== null && season.ypc !== undefined && 'ypc' in weights && weights.ypc) {
+  if (season.ypc !== null && season.ypc !== undefined && season.ypc > 0 && 'ypc' in weights && weights.ypc) {
     const zScore = computeZScore(season.ypc, means.ypc, stdDevs.ypc)
     score += weights.ypc * zScore
     totalWeight += weights.ypc
   }
 
   // Yards per reception component (WR/TE only)
-  if (season.ypr !== null && season.ypr !== undefined && 'ypr' in weights && weights.ypr) {
+  if (season.ypr !== null && season.ypr !== undefined && season.ypr > 0 && 'ypr' in weights && weights.ypr) {
     const zScore = computeZScore(season.ypr, means.ypr, stdDevs.ypr)
     score += weights.ypr * zScore
     totalWeight += weights.ypr
@@ -175,6 +175,12 @@ export function computeDraftScore(
     const injuryRisk = Math.max(0, (expectedGames - season.games) / expectedGames)
     score += weights.injury * injuryRisk
     totalWeight += Math.abs(weights.injury)
+  }
+
+  // If no valid metrics, return a basic score based on PPG
+  if (totalWeight === 0 && season.ppg > 0) {
+    const zScore = computeZScore(season.ppg, means.ppg, stdDevs.ppg)
+    return zScore * config.positionValue
   }
 
   // Normalize by total weight

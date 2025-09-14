@@ -16,16 +16,16 @@ function generatePlayerId(name: string, position: string): string {
 // Comprehensive player data for all positions
 const mockPlayers = {
   QB: [
-    { name: "Josh Allen", team: "BUF", ppg: 24.5, fpts: 416.5, games: 17 },
-    { name: "Lamar Jackson", team: "BAL", ppg: 23.8, fpts: 404.6, games: 17 },
-    { name: "Dak Prescott", team: "DAL", ppg: 22.1, fpts: 375.7, games: 17 },
-    { name: "Jalen Hurts", team: "PHI", ppg: 21.9, fpts: 372.3, games: 17 },
-    { name: "Tua Tagovailoa", team: "MIA", ppg: 21.2, fpts: 360.4, games: 17 },
-    { name: "C.J. Stroud", team: "HOU", ppg: 20.8, fpts: 353.6, games: 17 },
-    { name: "Brock Purdy", team: "SF", ppg: 20.1, fpts: 341.7, games: 17 },
-    { name: "Patrick Mahomes", team: "KC", ppg: 19.8, fpts: 336.6, games: 17 },
-    { name: "Justin Herbert", team: "LAC", ppg: 19.5, fpts: 331.5, games: 17 },
-    { name: "Joe Burrow", team: "CIN", ppg: 19.2, fpts: 326.4, games: 17 },
+    { name: "Josh Allen", team: "BUF", ppg: 24.5, fpts: 416.5, games: 17, att: 541, passYds: 4306, passTd: 29, rushYds: 524, rushTd: 15 },
+    { name: "Lamar Jackson", team: "BAL", ppg: 23.8, fpts: 404.6, games: 17, att: 457, passYds: 3678, passTd: 24, rushYds: 821, rushTd: 5 },
+    { name: "Dak Prescott", team: "DAL", ppg: 22.1, fpts: 375.7, games: 17, att: 475, passYds: 4516, passTd: 36, rushYds: 105, rushTd: 2 },
+    { name: "Jalen Hurts", team: "PHI", ppg: 21.9, fpts: 372.3, games: 17, att: 428, passYds: 3858, passTd: 23, rushYds: 605, rushTd: 15 },
+    { name: "Tua Tagovailoa", team: "MIA", ppg: 21.2, fpts: 360.4, games: 17, att: 388, passYds: 4624, passTd: 29, rushYds: 74, rushTd: 0 },
+    { name: "C.J. Stroud", team: "HOU", ppg: 20.8, fpts: 353.6, games: 17, att: 499, passYds: 4108, passTd: 23, rushYds: 167, rushTd: 3 },
+    { name: "Brock Purdy", team: "SF", ppg: 20.1, fpts: 341.7, games: 17, att: 444, passYds: 4280, passTd: 31, rushYds: 144, rushTd: 2 },
+    { name: "Patrick Mahomes", team: "KC", ppg: 19.8, fpts: 336.6, games: 17, att: 566, passYds: 4183, passTd: 27, rushYds: 389, rushTd: 4 },
+    { name: "Justin Herbert", team: "LAC", ppg: 19.5, fpts: 331.5, games: 17, att: 522, passYds: 4733, passTd: 25, rushYds: 228, rushTd: 3 },
+    { name: "Joe Burrow", team: "CIN", ppg: 19.2, fpts: 326.4, games: 17, att: 365, passYds: 2309, passTd: 15, rushYds: 79, rushTd: 0 },
     { name: "Anthony Richardson", team: "IND", ppg: 18.9, fpts: 321.3, games: 17 },
     { name: "Trevor Lawrence", team: "JAX", ppg: 18.6, fpts: 316.2, games: 17 },
     { name: "Jordan Love", team: "GB", ppg: 18.3, fpts: 311.1, games: 17 },
@@ -245,6 +245,24 @@ async function main() {
         },
       });
 
+      // Calculate derived metrics
+      const att = (playerData as any).att || 0
+      const rec = (playerData as any).rec || 0
+      const tgt = (playerData as any).tgt || 0
+      const rushYds = (playerData as any).rushYds || 0
+      const recvYds = (playerData as any).recvYds || 0
+      const passTd = (playerData as any).passTd || 0
+      const rushTd = (playerData as any).rushTd || 0
+      const recTd = (playerData as any).recTd || 0
+      
+      const touches = att + rec
+      const totalTd = passTd + rushTd + recTd
+      const ppt = touches > 0 ? playerData.ppg / touches : 0
+      const ypc = att > 0 ? rushYds / att : 0
+      const ypr = rec > 0 ? recvYds / rec : 0
+      const tpg = playerData.games > 0 ? tgt / playerData.games : 0
+      const oppg = playerData.games > 0 ? tgt / playerData.games : 0
+
       // Create season record with computed metrics
       await prisma.season.create({
         data: {
@@ -252,20 +270,20 @@ async function main() {
           playerId: player.id,
           year: 2024,
           games: playerData.games || 17,
-          att: position === 'QB' ? 0 : (playerData as any).att || 0,
-          tgt: (playerData as any).tgt || 0,
-          rec: (playerData as any).rec || 0,
-          rushYds: position === 'QB' ? 0 : (playerData as any).rushYds || 0,
-          recvYds: (playerData as any).recvYds || 0,
-          totalTd: (playerData as any).totalTd || 0,
+          att: att,
+          tgt: tgt,
+          rec: rec,
+          rushYds: rushYds,
+          recvYds: recvYds,
+          totalTd: totalTd,
           fpts: playerData.fpts || 0,
           ppg: playerData.ppg || 0,
-          touches: (playerData as any).touches || 0,
-          ppt: (playerData as any).ppt || 0,
-          ypc: (playerData as any).ypc || 0,
-          ypr: (playerData as any).ypr || 0,
-          tpg: (playerData as any).tpg || 0,
-          oppg: (playerData as any).oppg || 0,
+          touches: touches,
+          ppt: ppt,
+          ypc: ypc,
+          ypr: ypr,
+          tpg: tpg,
+          oppg: oppg,
           isRookie: false,
         },
       });
