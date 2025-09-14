@@ -1,14 +1,14 @@
 {
   "name": "fantasy-draft-assistant",
-  "version": "1.0.0",
-  "description": "This is an app to help you win in Fantasy Football",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "etl": "npm run etl --prefix backend"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "csv-parser": "^3.2.0"
+  "devDependencies": {
+    "typescript": "^5.0.0"
   }
 }

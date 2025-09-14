@@ -1,0 +1,60 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Player {
+  id        String   @id
+  name      String
+  position  String
+  team      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  seasons   Season[]
+}
+
+model Season {
+  id           String   @id
+  playerId     String
+  year         Int
+  games        Int
+  att          Int?
+  tgt          Int?
+  rec          Int?
+  rushYds      Float?
+  recvYds      Float?
+  totalTd      Int?
+  fpts         Float?
+  ppg          Float?
+  touches      Int?
+  ppt          Float?
+  ypc          Float?
+  ypr          Float?
+  tpg          Float?
+  oppg         Float?
+  consistency  Float?
+  snapShare    Float?
+
+  // weighted/z/composite fields (denormalized for speed)
+  ppgWeighted  Float?
+  pptWeighted  Float?
+  oppgWeighted Float?
+  ypcWeighted  Float?
+  draftScore   Float?
+  vorp         Float?
+
+  // rookies
+  isRookie       Boolean? @default(false)
+  draftRound     Int?
+  draftPick      Int?
+  collegeYdsPg   Float?
+  combineSpeed   Float?
+  rookieScore    Float?
+  rookiePpgProj  Float?
+
+  Player       Player   @relation(fields: [playerId], references: [id])
+}
