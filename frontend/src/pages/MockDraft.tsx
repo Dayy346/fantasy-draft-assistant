@@ -13,15 +13,18 @@ function MockDraftSetup({ onCreateSession }: MockDraftSetupProps) {
   const [totalRounds, setTotalRounds] = useState(15)
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Mock Draft</h1>
-        <p className="text-xl text-gray-600">
-          Draft against AI bots with different strategies
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            Mock Draft
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Draft against AI bots with different strategies and build your championship team
+          </p>
+        </div>
 
-      <div className="card max-w-2xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-3xl mx-auto p-8">
         <h2 className="text-2xl font-semibold mb-6">Draft Settings</h2>
         
         <div className="space-y-6">
@@ -32,7 +35,7 @@ function MockDraftSetup({ onCreateSession }: MockDraftSetupProps) {
             <select
               value={numTeams}
               onChange={(e) => setNumTeams(Number(e.target.value))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400"
             >
               {Array.from({ length: 11 }, (_, i) => i + 2).map((num) => (
                 <option key={num} value={num}>
@@ -46,8 +49,8 @@ function MockDraftSetup({ onCreateSession }: MockDraftSetupProps) {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Draft Type
             </label>
-            <div className="space-y-2">
-              <label className="flex items-center">
+            <div className="grid grid-cols-2 gap-4">
+              <label className="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-300 transition-all duration-200">
                 <input
                   type="radio"
                   name="draftType"
@@ -55,9 +58,12 @@ function MockDraftSetup({ onCreateSession }: MockDraftSetupProps) {
                   onChange={() => setIsSnake(true)}
                   className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                 />
-                <span>Snake Draft (Recommended)</span>
+                <div>
+                  <div className="font-medium">Snake Draft</div>
+                  <div className="text-sm text-gray-500">Recommended</div>
+                </div>
               </label>
-              <label className="flex items-center">
+              <label className="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-300 transition-all duration-200">
                 <input
                   type="radio"
                   name="draftType"
@@ -65,7 +71,10 @@ function MockDraftSetup({ onCreateSession }: MockDraftSetupProps) {
                   onChange={() => setIsSnake(false)}
                   className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                 />
-                <span>Linear Draft</span>
+                <div>
+                  <div className="font-medium">Linear Draft</div>
+                  <div className="text-sm text-gray-500">Traditional</div>
+                </div>
               </label>
             </div>
           </div>
@@ -89,11 +98,12 @@ function MockDraftSetup({ onCreateSession }: MockDraftSetupProps) {
 
           <button
             onClick={() => onCreateSession({ numTeams, isSnake, totalRounds })}
-            className="w-full btn-primary text-lg py-3"
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg py-4 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
           >
-            Start Mock Draft
+            🚀 Start Mock Draft
           </button>
         </div>
+      </div>
       </div>
     </div>
   )
@@ -111,60 +121,70 @@ function MockDraftBoard({ session, onMakePick, onBotPick, isMakingPick }: MockDr
   const isHumanTurn = currentTeam?.isHuman
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Mock Draft</h1>
-        <div className="flex items-center space-x-4 text-sm text-gray-600">
-          <span>Pick {session.currentPick} of {session.teams.length * session.totalRounds}</span>
-          <span>Round {Math.ceil(session.currentPick / session.teams.length)}</span>
-          <span>Team {session.currentTeam}</span>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            Mock Draft
+          </h1>
+          <div className="flex items-center space-x-6 text-sm">
+            <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200">
+              <span className="font-semibold text-gray-900">Pick {session.currentPick}</span>
+              <span className="text-gray-600"> of {session.teams.length * session.totalRounds}</span>
+            </div>
+            <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200">
+              <span className="font-semibold text-gray-900">Round {Math.ceil(session.currentPick / session.teams.length)}</span>
+            </div>
+            <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200">
+              <span className="font-semibold text-gray-900">Team {session.currentTeam}</span>
+            </div>
+          </div>
         </div>
-      </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <div className="card">
-            <h2 className="text-xl font-semibold mb-4">Draft Board</h2>
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6">
+            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Draft Board</h2>
             
             {isHumanTurn ? (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                <h3 className="font-semibold text-blue-900 mb-2">Your Turn!</h3>
-                <p className="text-blue-700">Select a player to draft</p>
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl p-6 mb-6 shadow-lg">
+                <h3 className="text-xl font-bold mb-2">🎯 Your Turn!</h3>
+                <p className="text-blue-100">Select a player to draft</p>
               </div>
             ) : (
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  {currentTeam?.name} is picking...
+              <div className="bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl p-6 mb-6 shadow-lg">
+                <h3 className="text-xl font-bold mb-2">
+                  🤖 {currentTeam?.name} is picking...
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-100 mb-4">
                   Strategy: {currentTeam?.strategy}
                 </p>
                 <button
                   onClick={onBotPick}
                   disabled={isMakingPick}
-                  className="mt-2 btn-secondary"
+                  className="bg-white text-gray-800 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50"
                 >
                   {isMakingPick ? 'Making Pick...' : 'Make Bot Pick'}
                 </button>
               </div>
             )}
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-xl border border-gray-200">
               <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-2 px-3 font-semibold text-gray-900">Pick</th>
-                    <th className="text-left py-2 px-3 font-semibold text-gray-900">Team</th>
-                    <th className="text-left py-2 px-3 font-semibold text-gray-900">Player</th>
-                    <th className="text-left py-2 px-3 font-semibold text-gray-900">Position</th>
-                    <th className="text-left py-2 px-3 font-semibold text-gray-900">Draft Score</th>
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="text-left py-4 px-4 font-semibold text-gray-900">Pick</th>
+                    <th className="text-left py-4 px-4 font-semibold text-gray-900">Team</th>
+                    <th className="text-left py-4 px-4 font-semibold text-gray-900">Player</th>
+                    <th className="text-left py-4 px-4 font-semibold text-gray-900">Position</th>
+                    <th className="text-left py-4 px-4 font-semibold text-gray-900">Draft Score</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-gray-200">
                   {session.picks.map((pick) => (
-                    <tr key={pick.id} className="border-b border-gray-100">
-                      <td className="py-2 px-3 text-gray-600">{pick.pickNumber}</td>
-                      <td className="py-2 px-3">
+                    <tr key={pick.id} className="hover:bg-gray-50 transition-colors duration-150">
+                      <td className="py-4 px-4 text-gray-600 font-medium">{pick.pickNumber}</td>
+                      <td className="py-4 px-4">
                         <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
                           pick.teamId === 1 ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
                         }`}>
@@ -189,22 +209,28 @@ function MockDraftBoard({ session, onMakePick, onBotPick, isMakingPick }: MockDr
         </div>
 
         <div className="space-y-6">
-          <div className="card">
-            <h3 className="text-lg font-semibold mb-4">Teams</h3>
-            <div className="space-y-2">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6">
+            <h3 className="text-xl font-semibold mb-6 text-gray-900">Teams</h3>
+            <div className="space-y-3">
               {session.teams.map((team) => (
-                <div key={team.id} className={`p-3 rounded-lg ${
-                  team.id === session.currentTeam ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50'
+                <div key={team.id} className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                  team.id === session.currentTeam 
+                    ? 'bg-gradient-to-r from-blue-50 to-blue-100 border-blue-300 shadow-md' 
+                    : 'bg-gray-50 border-gray-200 hover:border-gray-300'
                 }`}>
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">{team.name}</span>
-                    <span className="text-sm text-gray-600">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-semibold text-gray-900">{team.name}</span>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      team.isHuman 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-purple-100 text-purple-800'
+                    }`}>
                       {team.isHuman ? 'Human' : team.strategy}
                     </span>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">
+                  <div className="flex flex-wrap gap-2">
                     {Object.entries(team.roster).map(([pos, players]) => (
-                      <span key={pos} className="mr-2">
+                      <span key={pos} className="px-2 py-1 bg-white rounded-md text-xs font-medium text-gray-600 border border-gray-200">
                         {pos}: {players.length}
                       </span>
                     ))}
@@ -214,24 +240,55 @@ function MockDraftBoard({ session, onMakePick, onBotPick, isMakingPick }: MockDr
             </div>
           </div>
 
-          <div className="card">
-            <h3 className="text-lg font-semibold mb-4">Your Roster</h3>
-            <div className="space-y-2">
-              {Object.entries(session.teams[0]?.roster || {}).map(([position, players]) => {
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6">
+            <h3 className="text-xl font-semibold mb-6 text-gray-900">Your Roster</h3>
+            <div className="space-y-4">
+              {Object.entries(session.teams[0]?.roster || {}).map(([position, playerIds]) => {
                 const needs = session.teams[0]?.needs;
                 const positionNeeds = needs ? needs[position as keyof typeof needs] : 0;
+                const isComplete = playerIds.length >= positionNeeds;
+                
+                // Get player details from picks
+                const players = playerIds.map(playerId => 
+                  session.picks.find(pick => pick.playerId === playerId)?.player
+                ).filter(Boolean);
+                
                 return (
-                  <div key={position} className="flex justify-between items-center">
-                    <span className="text-sm font-medium">{position}</span>
-                    <span className="text-sm text-gray-600">
-                      {players.length} / {positionNeeds}
-                    </span>
+                  <div key={position} className={`p-4 rounded-xl border-2 ${
+                    isComplete 
+                      ? 'bg-green-50 border-green-200' 
+                      : 'bg-yellow-50 border-yellow-200'
+                  }`}>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-semibold text-gray-900">{position}</span>
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        isComplete 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {playerIds.length} / {positionNeeds}
+                      </span>
+                    </div>
+                    <div className="space-y-2">
+                      {players.map((player, index) => (
+                        <div key={index} className="flex justify-between items-center p-2 bg-white rounded-lg border border-gray-200">
+                          <span className="font-medium text-gray-900">{player?.name}</span>
+                          <span className="text-sm text-gray-600">{player?.position}</span>
+                        </div>
+                      ))}
+                      {playerIds.length === 0 && (
+                        <div className="text-center py-4 text-gray-500 text-sm">
+                          No {position} selected yet
+                        </div>
+                      )}
+                    </div>
                   </div>
-                );
+                )
               })}
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )
@@ -268,48 +325,61 @@ function PlayerSelector({ onSelectPlayer, isVisible, onClose }: PlayerSelectorPr
   if (!isVisible) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg max-w-4xl w-full mx-4 max-h-[80vh] overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Select Player</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+        <div className="p-8 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Select Player
+            </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-gray-600 text-2xl font-bold p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
             >
               ✕
             </button>
           </div>
           
-          <div className="flex space-x-4 mb-4">
-            <input
-              type="text"
-              placeholder="Search players..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          <div className="flex space-x-4 mb-6">
+            <div className="flex-1 relative">
+              <input
+                type="text"
+                placeholder="🔍 Search players..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400"
+              />
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                🔍
+              </div>
+            </div>
             <select
               value={selectedPosition}
               onChange={(e) => setSelectedPosition(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400 min-w-[150px]"
             >
               <option value="">All Positions</option>
-              <option value="QB">QB</option>
-              <option value="RB">RB</option>
-              <option value="WR">WR</option>
-              <option value="TE">TE</option>
+              <option value="QB">🏈 QB</option>
+              <option value="RB">🏃 RB</option>
+              <option value="WR">🎯 WR</option>
+              <option value="TE">📡 TE</option>
             </select>
           </div>
         </div>
 
-        <div className="overflow-y-auto max-h-96">
+        <div className="overflow-y-auto max-h-96 p-4">
           {isLoading ? (
-            <div className="p-6 text-center">Loading players...</div>
+            <div className="p-8 text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <div className="text-gray-600">Loading players...</div>
+            </div>
           ) : displayPlayers.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">No players found</div>
+            <div className="p-8 text-center text-gray-500">
+              <div className="text-4xl mb-4">🔍</div>
+              <div>No players found</div>
+            </div>
           ) : (
-            <div className="divide-y divide-gray-200">
+            <div className="space-y-2">
               {displayPlayers.map((player) => (
                 <div
                   key={player.id}
@@ -317,20 +387,29 @@ function PlayerSelector({ onSelectPlayer, isVisible, onClose }: PlayerSelectorPr
                     onSelectPlayer(player)
                     onClose()
                   }}
-                  className="p-4 hover:bg-gray-50 cursor-pointer"
+                  className="p-4 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 cursor-pointer rounded-xl border border-gray-200 hover:border-blue-300 transition-all duration-200 hover:shadow-md"
                 >
                   <div className="flex justify-between items-center">
-                    <div>
-                      <div className="font-medium">{player.name}</div>
-                      <div className="text-sm text-gray-600">
-                        {player.position} • {player.team || 'FA'}
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                        {player.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900 text-lg">{player.name}</div>
+                        <div className="text-sm text-gray-600 flex items-center space-x-2">
+                          <span className="px-2 py-1 bg-gray-100 rounded-md text-xs font-medium">
+                            {player.position}
+                          </span>
+                          <span>•</span>
+                          <span>{player.team || 'FA'}</span>
+                        </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-medium">
+                      <div className="text-lg font-bold text-gray-900">
                         {player.seasons[0]?.draftScore?.toFixed(1) || '-'}
                       </div>
-                      <div className="text-xs text-gray-500">Draft Score</div>
+                      <div className="text-xs text-gray-500 font-medium">Draft Score</div>
                     </div>
                   </div>
                 </div>

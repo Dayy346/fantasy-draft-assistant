@@ -1,85 +1,161 @@
 # Fantasy Draft Assistant - Metrics Documentation
 
-This document explains the mathematical formulas and methodology used in the Fantasy Draft Assistant.
+## Overview
 
-## Base Metrics
+This document describes the comprehensive metrics and calculations used in the Fantasy Draft Assistant to evaluate player performance across all positions (QB, RB, WR, TE) and generate draft recommendations.
+
+## Core Metrics
 
 ### Points Per Game (PPG)
-**Formula**: `PPG = Total Fantasy Points / Games Played`
-
-The most fundamental metric, representing a player's average fantasy production per game.
+- **Definition**: Total fantasy points divided by games played
+- **Calculation**: `fpts / games`
+- **Usage**: Primary metric for overall player value across all positions
 
 ### Points Per Touch (PPT)
-**Formula**: `PPT = Total Fantasy Points / Total Touches`
-
-Measures efficiency with the ball in hand. Higher values indicate more productive touches.
+- **Definition**: Fantasy points per opportunity (carries + receptions)
+- **Calculation**: `fpts / (att + rec)`
+- **Usage**: Efficiency metric for skill position players (RB, WR, TE)
 
 ### Opportunities Per Game (OPPG)
-**Formula**: `OPPG = (Rush Attempts + Targets) / Games Played`
-
-Quantifies how often a player gets the ball, regardless of outcome.
+- **Definition**: Total opportunities (carries + targets) per game
+- **Calculation**: `(att + tgt) / games`
+- **Usage**: Volume metric indicating usage (RB)
 
 ### Yards Per Carry (YPC)
-**Formula**: `YPC = Rushing Yards / Rush Attempts`
-
-Running back efficiency metric. Higher values indicate better rushing ability.
+- **Definition**: Rushing yards per carry
+- **Calculation**: `rushYds / att`
+- **Usage**: RB efficiency metric
 
 ### Yards Per Reception (YPR)
-**Formula**: `YPR = Receiving Yards / Receptions`
+- **Definition**: Receiving yards per reception
+- **Calculation**: `recvYds / rec`
+- **Usage**: WR/TE efficiency metric
 
-Receiving efficiency metric for pass-catchers.
+## Position-Specific Advanced Metrics
 
-## Advanced Metrics
+### Running Backs (RB)
+- **Touches**: `att + rec` - Total opportunities
+- **PPT**: Points per touch efficiency
+- **OPPG**: Opportunities per game (volume)
+- **YPC**: Yards per carry efficiency
 
-### 3-Year Weighted Averages
+### Wide Receivers (WR)
+- **Targets Per Game (TPG)**: `tgt / games` - Volume metric
+- **Yards Per Route Run (YPRR)**: `recvYds / routes` - Route efficiency
+- **Yards Per Target (YPT)**: `recvYds / tgt` - Target efficiency
+- **Average Depth of Target (aDOT)**: `airYds / tgt` - Target depth
+- **PPT**: Points per touch efficiency
 
-All metrics are computed using a recency-weighted average over the last 3 seasons:
+### Tight Ends (TE)
+- **Targets Per Game (TPG)**: `tgt / games` - Volume metric
+- **Yards Per Route Run (YPRR)**: `recvYds / routes` - Route efficiency
+- **Yards Per Target (YPT)**: `recvYds / tgt` - Target efficiency
+- **PPT**: Points per touch efficiency
 
-**Formula**: `Weighted_Value = 0.6 × Year1 + 0.3 × Year2 + 0.1 × Year3`
+### Quarterbacks (QB)
+- **Yards Per Attempt (YPA)**: `passYds / passAtt` - Passing efficiency
+- **Pass TD Rate**: `passTd / passAtt` - Touchdown efficiency
+- **INT Rate**: `ints / passAtt` - Interception rate (negative)
+- **Rushing PPG Index**: `(rushYds/10 + rushTd*6) / games` - Dual-threat ability
 
-This gives more weight to recent performance while still considering historical data.
+## Advanced Calculations
 
-### Position-Adjusted Z-Scores
+### 3-Year Weighted Average
+- **Purpose**: Smooth out year-to-year variance and emphasize recent performance
+- **Weights**: 
+  - Year 1 (most recent): 60%
+  - Year 2: 30%
+  - Year 3: 10%
+- **Calculation**: `(y1 * 0.6) + (y2 * 0.3) + (y3 * 0.1)`
+- **Renormalization**: If years are missing, weights are adjusted proportionally
 
-Z-scores normalize player performance relative to their position:
+### Z-Scores
+- **Purpose**: Normalize metrics across positions for fair comparison
+- **Calculation**: `(value - mean) / standard_deviation`
+- **Usage**: Position-specific standardization
+- **Minimum Games**: Only players with ≥8 games included in cohort calculations
 
-**Formula**: `Z_Score = (Player_Value - Position_Mean) / Position_Standard_Deviation`
+### Draft Score
+- **Purpose**: Composite score combining multiple metrics with position-specific weights
+- **Calculation**: Weighted sum of z-scores, renormalized if metrics are missing
+- **Weights by Position**:
+  - **RB**: PPG (40%), PPT (20%), OPPG (15%), YPC (10%), Injury (-10%), Consistency (5%)
+  - **WR**: PPG (40%), TPG (20%), YPRR/YPT (15%), PPT (10%), aDOT (5%), Consistency (5%), Injury (-5%)
+  - **TE**: PPG (45%), TPG (25%), YPRR/YPT (15%), PPT (10%), Consistency (5%)
+  - **QB**: PPG (45%), Pass TD Rate (15%), YPA (10%), Rushing PPG Index (15%), INT Rate (-10%), Consistency (5%)
 
-This allows fair comparison across different positions and scoring environments.
+### VORP (Value Over Replacement Player)
+- **Purpose**: Value above replacement-level player within position
+- **Replacement Baselines** (12-team leagues):
+  - RB: 30th ranked
+  - WR: 36th ranked
+  - TE: 12th ranked
+  - QB: 12th ranked
+- **Calculation**: `player_ppg_w - replacement_ppg_w`
+- **Usage**: Position-relative value assessment
 
-### Composite Draft Score
+## Data Requirements
 
-A weighted combination of z-scores that varies by position:
+### Minimum Games Threshold
+- **Value**: 8 games
+- **Purpose**: Filter out small sample sizes that skew z-scores
+- **Application**: Only players with ≥8 games included in cohort calculations
 
-#### Running Backs
+### Field Mapping
+The system maps various data sources to canonical field names:
+- **QB**: pass_att, pass_cmp, pass_yds, pass_td, ints, rush_att, rush_yds, rush_td
+- **RB**: att, tgt, rec, rush_yds, recv_yds, total_td
+- **WR/TE**: tgt, rec, recv_yds, rec_td, routes, air_yds
+
+### Data Sources
+- Fantasy points from standard scoring
+- Game logs for per-game calculations
+- 3+ years of data for weighted averages
+- Position-specific advanced metrics where available
+- Route data for WR/TE (optional, falls back to YPT)
+
+## Implementation Details
+
+### Scoring Pipeline
+1. **Normalization**: Map raw data to canonical fields
+2. **Derivation**: Calculate position-specific metrics
+3. **Weighting**: Apply 3-year recency weights
+4. **Z-Scoring**: Normalize within position cohorts
+5. **Draft Scoring**: Combine weighted z-scores
+6. **VORP**: Calculate value over replacement
+
+### Error Handling
+- **Division by Zero**: Safe division functions prevent crashes
+- **Missing Data**: Graceful fallbacks (YPRR → YPT)
+- **Weight Renormalization**: Adjusts weights when metrics are missing
+- **Small Samples**: Filters out players with insufficient games
+
+### Performance Considerations
+- **Cohort Grouping**: Efficient position-based calculations
+- **Batch Processing**: Handles large datasets
+- **Memory Management**: Streams data processing
+- **Caching**: Stores computed metrics for API responses
+
+## Usage Examples
+
+### API Sorting
+```javascript
+// Sort by draft score
+GET /api/players?sortBy=draftScore&sortOrder=desc
+
+// Sort by VORP
+GET /api/players?sortBy=vorp&sortOrder=desc
+
+// Sort by position-specific metrics
+GET /api/players?position=QB&sortBy=ypa&sortOrder=desc
 ```
-Draft_Score = 0.40 × Z(PPG) + 0.20 × Z(PPT) + 0.15 × Z(OPPG) + 0.10 × Z(YPC) - 0.10 × Z(Injury_Risk) + 0.05 × Z(Consistency)
-```
 
-#### Wide Receivers
-```
-Draft_Score = 0.35 × Z(PPG) + 0.25 × Z(PPT) + 0.20 × Z(OPPG) + 0.10 × Z(YPR) - 0.05 × Z(Injury_Risk) + 0.05 × Z(Consistency)
-```
-
-#### Tight Ends
-```
-Draft_Score = 0.30 × Z(PPG) + 0.25 × Z(PPT) + 0.20 × Z(OPPG) + 0.15 × Z(YPR) - 0.05 × Z(Injury_Risk) + 0.05 × Z(Consistency)
-```
-
-#### Quarterbacks
-```
-Draft_Score = 0.50 × Z(PPG) + 0.20 × Z(PPT) + 0.15 × Z(OPPG) - 0.10 × Z(Injury_Risk) + 0.05 × Z(Consistency)
-```
-
-### Value Over Replacement Player (VORP)
-
-**Formula**: `VORP = Projected_PPG - Replacement_Level_PPG`
-
-Replacement levels by position:
-- QB: QB12 (12th best QB)
-- RB: RB30 (30th best RB)
-- WR: WR36 (36th best WR)
-- TE: TE12 (12th best TE)
+### Metric Interpretation
+- **Draft Score > 1.0**: Elite tier players
+- **Draft Score 0.0-1.0**: Solid starters
+- **Draft Score < 0.0**: Bench/streaming options
+- **VORP > 0**: Above replacement level
+- **VORP < 0**: Below replacement level
 
 ## Rookie Projections
 
@@ -122,21 +198,6 @@ Where Expected_Games = 17 (full season).
 
 Higher values indicate more consistent weekly performance.
 
-## Data Sources
-
-- **NFL Statistics**: Official NFL game logs and statistics
-- **Fantasy Points**: Standard PPR scoring (1 point per reception)
-- **Draft Information**: NFL Draft results and college statistics
-- **Combine Data**: NFL Scouting Combine measurements
-
-## Methodology Notes
-
-1. **Sample Size**: Minimum 8 games required for meaningful statistics
-2. **Position Groups**: Metrics calculated separately for each position
-3. **Outliers**: Extreme values are capped but not removed
-4. **Missing Data**: Gracefully handled with appropriate defaults
-5. **Transparency**: All formulas are documented and configurable
-
 ## Configuration
 
 All weights and thresholds can be adjusted in `backend/src/lib/config.ts` to fine-tune the scoring system based on league settings or user preferences.
@@ -150,3 +211,12 @@ The scoring system is validated against:
 - Statistical significance tests
 
 This ensures the metrics provide meaningful insights for draft decisions.
+
+## Future Enhancements
+
+### Planned Additions
+- **Consistency Metrics**: Weekly variance calculations
+- **Injury Risk**: Games missed analysis
+- **Rookie Projections**: Draft capital + college production
+- **Situational Metrics**: Red zone, third down efficiency
+- **Weather Adjustments**: Outdoor vs. indoor performance

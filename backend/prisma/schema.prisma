@@ -47,6 +47,29 @@ model Season {
   draftScore   Float?
   vorp         Float?
 
+  // Position-specific advanced metrics
+  yprr         Float?  // Yards per route run (WR/TE)
+  ypt          Float?  // Yards per target (WR/TE)
+  adot         Float?  // Average depth of target (WR/TE)
+  ypa          Float?  // Yards per attempt (QB)
+  pass_td_rate Float?  // Pass TD rate (QB)
+  int_rate     Float?  // Interception rate (QB)
+  rushing_ppg_index Float? // Rushing PPG index (QB)
+
+  // Weighted metrics for comprehensive scoring
+  ppg_w        Float?
+  ppt_w        Float?
+  oppg_w       Float?
+  ypc_w        Float?
+  tpg_w        Float?
+  yprr_w       Float?
+  ypt_w        Float?
+  adot_w       Float?
+  ypa_w        Float?
+  pass_td_rate_w Float?
+  int_rate_w   Float?
+  rushing_ppg_index_w Float?
+
   // rookies
   isRookie       Boolean? @default(false)
   draftRound     Int?

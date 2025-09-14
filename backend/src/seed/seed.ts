@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { updatePlayerScores } from '../services/scoring.service';
 import { updateRookieProjections } from '../services/rookies.service';
+import { mapRow, deriveCommon, deriveRB, deriveReceiver, deriveQB } from '../etl/normalize';
+import { scorePlayers } from '../services/scoring.service';
 
 const prisma = new PrismaClient();
 
@@ -16,16 +18,16 @@ function generatePlayerId(name: string, position: string): string {
 // Comprehensive player data for all positions
 const mockPlayers = {
   QB: [
-    { name: "Josh Allen", team: "BUF", ppg: 24.5, fpts: 416.5, games: 17, att: 541, passYds: 4306, passTd: 29, rushYds: 524, rushTd: 15 },
-    { name: "Lamar Jackson", team: "BAL", ppg: 23.8, fpts: 404.6, games: 17, att: 457, passYds: 3678, passTd: 24, rushYds: 821, rushTd: 5 },
-    { name: "Dak Prescott", team: "DAL", ppg: 22.1, fpts: 375.7, games: 17, att: 475, passYds: 4516, passTd: 36, rushYds: 105, rushTd: 2 },
-    { name: "Jalen Hurts", team: "PHI", ppg: 21.9, fpts: 372.3, games: 17, att: 428, passYds: 3858, passTd: 23, rushYds: 605, rushTd: 15 },
-    { name: "Tua Tagovailoa", team: "MIA", ppg: 21.2, fpts: 360.4, games: 17, att: 388, passYds: 4624, passTd: 29, rushYds: 74, rushTd: 0 },
-    { name: "C.J. Stroud", team: "HOU", ppg: 20.8, fpts: 353.6, games: 17, att: 499, passYds: 4108, passTd: 23, rushYds: 167, rushTd: 3 },
-    { name: "Brock Purdy", team: "SF", ppg: 20.1, fpts: 341.7, games: 17, att: 444, passYds: 4280, passTd: 31, rushYds: 144, rushTd: 2 },
-    { name: "Patrick Mahomes", team: "KC", ppg: 19.8, fpts: 336.6, games: 17, att: 566, passYds: 4183, passTd: 27, rushYds: 389, rushTd: 4 },
-    { name: "Justin Herbert", team: "LAC", ppg: 19.5, fpts: 331.5, games: 17, att: 522, passYds: 4733, passTd: 25, rushYds: 228, rushTd: 3 },
-    { name: "Joe Burrow", team: "CIN", ppg: 19.2, fpts: 326.4, games: 17, att: 365, passYds: 2309, passTd: 15, rushYds: 79, rushTd: 0 },
+    { name: "Josh Allen", team: "BUF", ppg: 24.5, fpts: 416.5, games: 17, att: 541, passYds: 4306, passTd: 29, ints: 18, rushYds: 524, rushTd: 15 },
+    { name: "Lamar Jackson", team: "BAL", ppg: 23.8, fpts: 404.6, games: 17, att: 457, passYds: 3678, passTd: 24, ints: 7, rushYds: 821, rushTd: 5 },
+    { name: "Dak Prescott", team: "DAL", ppg: 22.1, fpts: 375.7, games: 17, att: 475, passYds: 4516, passTd: 36, ints: 9, rushYds: 105, rushTd: 2 },
+    { name: "Jalen Hurts", team: "PHI", ppg: 21.9, fpts: 372.3, games: 17, att: 428, passYds: 3858, passTd: 23, ints: 15, rushYds: 605, rushTd: 15 },
+    { name: "Tua Tagovailoa", team: "MIA", ppg: 21.2, fpts: 360.4, games: 17, att: 388, passYds: 4624, passTd: 29, ints: 11, rushYds: 74, rushTd: 0 },
+    { name: "C.J. Stroud", team: "HOU", ppg: 20.8, fpts: 353.6, games: 17, att: 499, passYds: 4108, passTd: 23, ints: 5, rushYds: 167, rushTd: 3 },
+    { name: "Brock Purdy", team: "SF", ppg: 20.1, fpts: 341.7, games: 17, att: 444, passYds: 4280, passTd: 31, ints: 11, rushYds: 144, rushTd: 2 },
+    { name: "Patrick Mahomes", team: "KC", ppg: 19.8, fpts: 336.6, games: 17, att: 566, passYds: 4183, passTd: 27, ints: 14, rushYds: 389, rushTd: 4 },
+    { name: "Justin Herbert", team: "LAC", ppg: 19.5, fpts: 331.5, games: 17, att: 522, passYds: 4733, passTd: 25, ints: 10, rushYds: 228, rushTd: 3 },
+    { name: "Joe Burrow", team: "CIN", ppg: 19.2, fpts: 326.4, games: 17, att: 365, passYds: 2309, passTd: 15, ints: 6, rushYds: 79, rushTd: 0 },
     { name: "Anthony Richardson", team: "IND", ppg: 18.9, fpts: 321.3, games: 17 },
     { name: "Trevor Lawrence", team: "JAX", ppg: 18.6, fpts: 316.2, games: 17 },
     { name: "Jordan Love", team: "GB", ppg: 18.3, fpts: 311.1, games: 17 },
@@ -48,16 +50,16 @@ const mockPlayers = {
     { name: "Ryan Tannehill", team: "TEN", ppg: 13.2, fpts: 224.4, games: 17 }
   ],
   WR: [
-    { name: "Tyreek Hill", team: "MIA", ppg: 18.2, fpts: 309.4, games: 17, rec: 119, recvYds: 1799, tgt: 171 },
-    { name: "CeeDee Lamb", team: "DAL", ppg: 17.8, fpts: 302.6, games: 17, rec: 135, recvYds: 1749, tgt: 181 },
-    { name: "Amon-Ra St. Brown", team: "DET", ppg: 17.1, fpts: 290.7, games: 17, rec: 119, recvYds: 1515, tgt: 164 },
-    { name: "Mike Evans", team: "TB", ppg: 16.8, fpts: 285.6, games: 17, rec: 79, recvYds: 1255, tgt: 136 },
-    { name: "A.J. Brown", team: "PHI", ppg: 16.5, fpts: 280.5, games: 17, rec: 106, recvYds: 1496, tgt: 146 },
-    { name: "Stefon Diggs", team: "BUF", ppg: 16.2, fpts: 275.4, games: 17, rec: 107, recvYds: 1183, tgt: 160 },
-    { name: "Davante Adams", team: "LV", ppg: 15.9, fpts: 270.3, games: 17, rec: 103, recvYds: 1144, tgt: 175 },
-    { name: "Keenan Allen", team: "LAC", ppg: 15.6, fpts: 265.2, games: 17, rec: 108, recvYds: 1243, tgt: 150 },
-    { name: "Puka Nacua", team: "LAR", ppg: 15.3, fpts: 260.1, games: 17, rec: 105, recvYds: 1486, tgt: 160 },
-    { name: "Ja'Marr Chase", team: "CIN", ppg: 15.0, fpts: 255.0, games: 17, rec: 100, recvYds: 1216, tgt: 145 },
+    { name: "Tyreek Hill", team: "MIA", ppg: 18.2, fpts: 309.4, games: 17, rec: 119, recvYds: 1799, tgt: 171, recTd: 13, routes: 600, airYds: 1200 },
+    { name: "CeeDee Lamb", team: "DAL", ppg: 17.8, fpts: 302.6, games: 17, rec: 135, recvYds: 1749, tgt: 181, recTd: 12, routes: 650, airYds: 1100 },
+    { name: "Amon-Ra St. Brown", team: "DET", ppg: 17.1, fpts: 290.7, games: 17, rec: 119, recvYds: 1515, tgt: 164, recTd: 10, routes: 580, airYds: 900 },
+    { name: "Mike Evans", team: "TB", ppg: 16.8, fpts: 285.6, games: 17, rec: 79, recvYds: 1255, tgt: 136, recTd: 13, routes: 500, airYds: 1000 },
+    { name: "A.J. Brown", team: "PHI", ppg: 16.5, fpts: 280.5, games: 17, rec: 106, recvYds: 1496, tgt: 146, recTd: 11, routes: 520, airYds: 950 },
+    { name: "Stefon Diggs", team: "BUF", ppg: 16.2, fpts: 275.4, games: 17, rec: 107, recvYds: 1183, tgt: 160, recTd: 8, routes: 580, airYds: 750 },
+    { name: "Davante Adams", team: "LV", ppg: 15.9, fpts: 270.3, games: 17, rec: 103, recvYds: 1144, tgt: 175, recTd: 8, routes: 620, airYds: 800 },
+    { name: "Keenan Allen", team: "LAC", ppg: 15.6, fpts: 265.2, games: 17, rec: 108, recvYds: 1243, tgt: 150, recTd: 7, routes: 400, airYds: 700 },
+    { name: "Puka Nacua", team: "LAR", ppg: 15.3, fpts: 260.1, games: 17, rec: 105, recvYds: 1486, tgt: 160, recTd: 6, routes: 550, airYds: 850 },
+    { name: "Ja'Marr Chase", team: "CIN", ppg: 18.5, fpts: 314.5, games: 17, rec: 120, recvYds: 1500, tgt: 180, recTd: 12, routes: 600, airYds: 1200 },
     { name: "Cooper Kupp", team: "LAR", ppg: 14.7, fpts: 249.9, games: 17, rec: 95, recvYds: 1135, tgt: 130 },
     { name: "DeVonta Smith", team: "PHI", ppg: 14.4, fpts: 244.8, games: 17, rec: 81, recvYds: 1066, tgt: 106 },
     { name: "DK Metcalf", team: "SEA", ppg: 14.1, fpts: 239.7, games: 17, rec: 66, recvYds: 1114, tgt: 95 },
@@ -80,16 +82,16 @@ const mockPlayers = {
     { name: "Zay Flowers", team: "BAL", ppg: 9.0, fpts: 153.0, games: 17, rec: 77, recvYds: 858, tgt: 108 }
   ],
   TE: [
-    { name: "Travis Kelce", team: "KC", ppg: 14.2, fpts: 241.4, games: 17, rec: 93, recvYds: 1338, tgt: 121 },
-    { name: "Sam LaPorta", team: "DET", ppg: 13.8, fpts: 234.6, games: 17, rec: 86, recvYds: 889, tgt: 120 },
-    { name: "Jake Ferguson", team: "DAL", ppg: 13.5, fpts: 229.5, games: 17, rec: 71, recvYds: 761, tgt: 102 },
-    { name: "Evan Engram", team: "JAC", ppg: 13.2, fpts: 224.4, games: 17, rec: 114, recvYds: 963, tgt: 143 },
-    { name: "Trey McBride", team: "ARI", ppg: 12.9, fpts: 219.3, games: 17, rec: 81, recvYds: 825, tgt: 106 },
-    { name: "George Kittle", team: "SF", ppg: 12.6, fpts: 214.2, games: 17, rec: 65, recvYds: 1020, tgt: 90 },
-    { name: "Mark Andrews", team: "BAL", ppg: 12.3, fpts: 209.1, games: 17, rec: 45, recvYds: 544, tgt: 61 },
-    { name: "Kyle Pitts", team: "ATL", ppg: 12.0, fpts: 204.0, games: 17, rec: 53, recvYds: 667, tgt: 106 },
-    { name: "David Njoku", team: "CLE", ppg: 11.7, fpts: 198.9, games: 17, rec: 88, recvYds: 882, tgt: 123 },
-    { name: "Dallas Goedert", team: "PHI", ppg: 11.4, fpts: 193.8, games: 17, rec: 59, recvYds: 592, tgt: 76 },
+    { name: "Travis Kelce", team: "KC", ppg: 14.2, fpts: 241.4, games: 17, rec: 93, recvYds: 1338, tgt: 121, recTd: 10, routes: 450, airYds: 800 },
+    { name: "Sam LaPorta", team: "DET", ppg: 13.8, fpts: 234.6, games: 17, rec: 86, recvYds: 889, tgt: 120, recTd: 10, routes: 420, airYds: 600 },
+    { name: "Jake Ferguson", team: "DAL", ppg: 13.5, fpts: 229.5, games: 17, rec: 71, recvYds: 761, tgt: 102, recTd: 5, routes: 380, airYds: 500 },
+    { name: "Evan Engram", team: "JAC", ppg: 13.2, fpts: 224.4, games: 17, rec: 114, recvYds: 963, tgt: 143, recTd: 4, routes: 500, airYds: 600 },
+    { name: "Trey McBride", team: "ARI", ppg: 12.9, fpts: 219.3, games: 17, rec: 81, recvYds: 825, tgt: 106, recTd: 3, routes: 400, airYds: 550 },
+    { name: "George Kittle", team: "SF", ppg: 12.6, fpts: 214.2, games: 17, rec: 65, recvYds: 1020, tgt: 90, recTd: 6, routes: 350, airYds: 700 },
+    { name: "Mark Andrews", team: "BAL", ppg: 12.3, fpts: 209.1, games: 17, rec: 45, recvYds: 544, tgt: 61, recTd: 6, routes: 300, airYds: 400 },
+    { name: "Kyle Pitts", team: "ATL", ppg: 12.0, fpts: 204.0, games: 17, rec: 53, recvYds: 667, tgt: 106, recTd: 3, routes: 400, airYds: 500 },
+    { name: "David Njoku", team: "CLE", ppg: 11.7, fpts: 198.9, games: 17, rec: 88, recvYds: 882, tgt: 123, recTd: 6, routes: 450, airYds: 600 },
+    { name: "Dallas Goedert", team: "PHI", ppg: 11.4, fpts: 193.8, games: 17, rec: 59, recvYds: 592, tgt: 76, recTd: 3, routes: 350, airYds: 400 },
     { name: "Tyler Higbee", team: "LAR", ppg: 11.1, fpts: 188.7, games: 17, rec: 47, recvYds: 495, tgt: 70 },
     { name: "Cole Kmet", team: "CHI", ppg: 10.8, fpts: 183.6, games: 17, rec: 73, recvYds: 719, tgt: 93 },
     { name: "Pat Freiermuth", team: "PIT", ppg: 10.5, fpts: 178.5, games: 17, rec: 32, recvYds: 308, tgt: 47 },
@@ -176,6 +178,93 @@ const mockPlayers = {
   ]
 };
 
+async function computeComprehensiveScores() {
+  console.log('Computing comprehensive scores using new system...');
+  
+  // Get all players with their seasons
+  const players = await prisma.player.findMany({
+    include: {
+      seasons: {
+        orderBy: { year: 'desc' }
+      }
+    }
+  });
+
+  // Group by player for the scoring system
+  const mergedByPlayer: Record<string, any[]> = {};
+
+  for (const player of players) {
+    const playerId = player.id;
+    mergedByPlayer[playerId] = [];
+    
+    for (const season of player.seasons) {
+      // Map the season data to the format expected by scorePlayers
+      const seasonData = {
+        player_id: playerId,
+        name: player.name,
+        position: player.position,
+        year: season.year,
+        games: season.games,
+        fpts: season.fpts,
+        ppg: season.ppg,
+        // RB metrics
+        ppt: season.ppt,
+        oppg: season.oppg,
+        ypc: season.ypc,
+        // WR/TE metrics
+        tpg: season.tpg,
+        yprr: season.yprr,
+        ypt: season.ypt,
+        adot: season.adot,
+        // QB metrics
+        ypa: season.ypa,
+        pass_td_rate: season.pass_td_rate,
+        int_rate: season.int_rate,
+        rushing_ppg_index: season.rushing_ppg_index,
+      };
+      
+      mergedByPlayer[playerId].push(seasonData);
+    }
+  }
+
+  // Compute comprehensive scores
+  const scoredPlayers = scorePlayers(mergedByPlayer);
+  
+  // Update the database with new scores
+  for (const player of scoredPlayers) {
+    // Update the most recent season with the new scores
+    const latestSeason = await prisma.season.findFirst({
+      where: { playerId: player.player_id },
+      orderBy: { year: 'desc' }
+    });
+    
+    if (latestSeason) {
+      await prisma.season.update({
+        where: { id: latestSeason.id },
+        data: {
+          draftScore: player.draft_score || 0,
+          vorp: player.vorp || 0,
+          // Update weighted metrics
+          ppg_w: player.ppg_w,
+          ppt_w: player.ppt_w,
+          oppg_w: player.oppg_w,
+          ypc_w: player.ypc_w,
+          tpg_w: player.tpg_w,
+          yprr_w: player.yprr_w,
+          ypt_w: player.ypt_w,
+          adot_w: player.adot_w,
+          ypa_w: player.ypa_w,
+          pass_td_rate_w: player.pass_td_rate_w,
+          int_rate_w: player.int_rate_w,
+          rushing_ppg_index_w: player.rushing_ppg_index_w,
+        }
+      });
+    }
+  }
+  
+  console.log(`Updated comprehensive scores for ${scoredPlayers.length} players`);
+}
+
 async function main() {
   console.log('Starting seed...');
 
@@ -194,6 +283,12 @@ async function main() {
   for (const playerData of rbPlayers) {
     const playerId = generatePlayerId(playerData.player, 'RB');
     
+    // Debug: Check for Saquon Barkley
+    if (playerData.player === 'Saquon Barkley') {
+      console.log('Found Saquon Barkley:', playerData);
+      console.log('Generated ID:', playerId);
+    }
+    
     // Create player
     const player = await prisma.player.create({
       data: {
@@ -209,7 +304,7 @@ async function main() {
       data: {
         id: `${playerId}_2024`,
         playerId: player.id,
-        year: 2024,
+              year: 2024,
         games: playerData.games || 0,
         att: playerData.att || 0,
         tgt: playerData.tgt || 0,
@@ -250,10 +345,11 @@ async function main() {
       const rec = (playerData as any).rec || 0
       const tgt = (playerData as any).tgt || 0
       const rushYds = (playerData as any).rushYds || 0
-      const recvYds = (playerData as any).recvYds || 0
+      const recvYds = (playerData as any).recvYds || (playerData as any).passYds || 0
       const passTd = (playerData as any).passTd || 0
       const rushTd = (playerData as any).rushTd || 0
       const recTd = (playerData as any).recTd || 0
+      const ints = (playerData as any).ints || 0
       
       const touches = att + rec
       const totalTd = passTd + rushTd + recTd
@@ -262,6 +358,60 @@ async function main() {
       const ypr = rec > 0 ? recvYds / rec : 0
       const tpg = playerData.games > 0 ? tgt / playerData.games : 0
       const oppg = playerData.games > 0 ? tgt / playerData.games : 0
+
+      // Calculate position-specific derived metrics
+      let derivedMetrics: any = {};
+      
+      if (position === 'QB') {
+        // Map mock data fields to the format expected by deriveQB
+        const mappedData = {
+          ...playerData,
+          pass_yds: (playerData as any).passYds || (playerData as any).recvYds || 0,
+          pass_att: (playerData as any).att || 0,
+          pass_td: (playerData as any).passTd || 0,
+          ints: (playerData as any).ints || 0,
+          rush_yds: (playerData as any).rushYds || 0,
+          rush_td: (playerData as any).rushTd || 0,
+        };
+        const qbMetrics = deriveQB(mappedData);
+        derivedMetrics = {
+          ypa: qbMetrics.ypa,
+          pass_td_rate: qbMetrics.pass_td_rate,
+          int_rate: qbMetrics.int_rate,
+          rushing_ppg_index: qbMetrics.rushing_ppg_index,
+        };
+      } else if (position === 'RB') {
+        // Map mock data fields to the format expected by deriveRB
+        const mappedData = {
+          ...playerData,
+          rush_yds: (playerData as any).rushYds || 0,
+        };
+        const rbMetrics = deriveRB(mappedData);
+        derivedMetrics = {
+          touches: rbMetrics.touches,
+          ppt: rbMetrics.ppt,
+          ypc: rbMetrics.ypc,
+          oppg: rbMetrics.oppg,
+        };
+      } else if (position === 'WR' || position === 'TE') {
+        // Map mock data fields to the format expected by deriveReceiver
+        const mappedData = {
+          ...playerData,
+          recv_yds: (playerData as any).recvYds || 0,
+          routes: (playerData as any).routes || 0,
+          air_yds: (playerData as any).airYds || 0,
+          rush_att: (playerData as any).rushAtt || 0,
+        };
+        const receiverMetrics = deriveReceiver(mappedData);
+        derivedMetrics = {
+          touches: receiverMetrics.touches,
+          ppt: receiverMetrics.ppt,
+          ypt: receiverMetrics.ypt,
+          yprr: receiverMetrics.yprr,
+          tpg: receiverMetrics.tpg,
+          adot: receiverMetrics.adot,
+        };
+      }
 
       // Create season record with computed metrics
       await prisma.season.create({
@@ -276,14 +426,23 @@ async function main() {
           rushYds: rushYds,
           recvYds: recvYds,
           totalTd: totalTd,
+          // QB specific fields
+          ypa: position === 'QB' ? (att > 0 ? recvYds / att : 0) : null,
+          pass_td_rate: position === 'QB' ? (att > 0 ? passTd / att : 0) : null,
+          int_rate: position === 'QB' ? (att > 0 ? ints / att : 0) : null,
+          rushing_ppg_index: position === 'QB' ? ((rushYds / 10) + (rushTd * 6)) / (playerData.games || 17) : null,
           fpts: playerData.fpts || 0,
           ppg: playerData.ppg || 0,
-          touches: touches,
-          ppt: ppt,
-          ypc: ypc,
-          ypr: ypr,
-          tpg: tpg,
-          oppg: oppg,
+          touches: derivedMetrics.touches || touches,
+          ppt: derivedMetrics.ppt || ppt,
+          ypc: derivedMetrics.ypc || ypc,
+          ypr: derivedMetrics.ypt || ypr,
+          tpg: derivedMetrics.tpg || tpg,
+          oppg: derivedMetrics.oppg || oppg,
+          // Position-specific metrics
+          yprr: derivedMetrics.yprr,
+          ypt: derivedMetrics.ypt,
+          adot: derivedMetrics.adot,
           isRookie: false,
         },
       });
@@ -292,7 +451,10 @@ async function main() {
 
   console.log('Computing player scores and metrics...');
   
-  // Compute all the advanced metrics
+  // Use the new comprehensive scoring system
+  await computeComprehensiveScores();
+  
+  // Also run the legacy scoring for backward compatibility
   await updatePlayerScores();
   await updateRookieProjections();
 

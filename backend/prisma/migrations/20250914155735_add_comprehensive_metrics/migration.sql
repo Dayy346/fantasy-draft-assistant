@@ -1,0 +1,20 @@
+-- AlterTable
+ALTER TABLE "Season" ADD COLUMN "adot" REAL;
+ALTER TABLE "Season" ADD COLUMN "adot_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "int_rate" REAL;
+ALTER TABLE "Season" ADD COLUMN "int_rate_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "oppg_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "pass_td_rate" REAL;
+ALTER TABLE "Season" ADD COLUMN "pass_td_rate_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "ppg_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "ppt_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "rushing_ppg_index" REAL;
+ALTER TABLE "Season" ADD COLUMN "rushing_ppg_index_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "tpg_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "ypa" REAL;
+ALTER TABLE "Season" ADD COLUMN "ypa_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "ypc_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "yprr" REAL;
+ALTER TABLE "Season" ADD COLUMN "yprr_w" REAL;
+ALTER TABLE "Season" ADD COLUMN "ypt" REAL;
+ALTER TABLE "Season" ADD COLUMN "ypt_w" REAL;

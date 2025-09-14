@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPlayers, getPlayerById } from '../services/players.service';
+import { getPlayers, getPlayerById, searchPlayers } from '../services/players.service';
 
 const router = express.Router();
 
@@ -13,6 +13,15 @@ router.get('/players', async (req, res) => {
     parseInt(limit as string) || 10
   );
   res.json(players);
+});
+
+router.get('/players/search', async (req, res) => {
+  const { q, limit } = req.query;
+  if (!q) {
+    return res.status(400).json({ error: 'Query parameter q is required' });
+  }
+  const result = await searchPlayers(q as string, parseInt(limit as string) || 20);
+  res.json(result);
 });
 
 router.get('/players/:id', async (req, res) => {
